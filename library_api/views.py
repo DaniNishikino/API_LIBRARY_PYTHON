@@ -1,10 +1,17 @@
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import AuthorSerializer, BookSerializer
+from .serializer import AuthorSerializer, BookSerializer, UserSerializer
 from .models import Book, Author
+from django.contrib.auth.models import User
 
 # Create your views here.
+
+class UserCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes =  []
+
 class BookNoParameters(APIView):
     def get(self, request):
         book = Book.objects.all()
